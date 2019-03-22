@@ -1,6 +1,6 @@
 const mongoose = require("./db");
 
-const TicketSchema = new mongoose.Schema({
+const OrderSchema = new mongoose.Schema({
   ticId: String,
   outTime: String,
   outDate: String,
@@ -10,7 +10,8 @@ const TicketSchema = new mongoose.Schema({
   totalVote: Number,
   resVote: Number,
   outCity: String,
-  overCity: String
+  overCity: String,
+  userName: String
 });
 
-module.exports = mongoose.model("addtic", TicketSchema);
+module.exports = mongoose.model("order", OrderSchema);
