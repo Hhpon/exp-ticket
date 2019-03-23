@@ -175,7 +175,7 @@ app.post("/order", (req, res) => {
   let userName = req.body.userName;
   Order.find({ userName: userName }, (err, doc) => {
     if (!doc.length) {
-      res.send({ code: 202 });
+      res.send({ code: 202, orderInfo: [] });
       return;
     }
     res.send({ code: 200, orderInfo: doc });
