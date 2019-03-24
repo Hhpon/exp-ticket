@@ -138,6 +138,7 @@ app.post("/signin", (req, res) => {
 
 app.post("/inquire", (req, res) => {
   let inquireInfo = req.body.inquireInfo;
+  console.log(inquireInfo);
   Ticket.find(
     {
       outDate: inquireInfo.dateSel,
@@ -166,6 +167,14 @@ app.post("/sale", (req, res) => {
       res.send({ code: 201, message: "订单提交失败" });
       return;
     }
+    Ticket.update(
+      { _id: saleInfo._id },
+      { $inc: { resVote: -1 } },
+      (err, doc) => {
+        console.log(err);
+        console.log(doc);
+      }
+    );
     res.send({ code: 200 });
   });
 });
@@ -186,6 +195,10 @@ app.post("/refund", (req, res) => {
   console.log(req.body);
   let _id = req.body._id;
   Order.deleteOne({ _id: _id }, (err, doc) => {
+    console.log(doc);
+  });
+  Ticket.update({ _id: _id }, { $inc: { resVote: 1 } }, (err, doc) => {
+    console.log(err);
     console.log(doc);
   });
   res.send({ code: 200 });
