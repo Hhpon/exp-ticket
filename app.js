@@ -231,6 +231,30 @@ app.post("/edituser", (req, res) => {
   res.send({ code: 200 });
 });
 
+app.post("/getsearch", (req, res) => {
+  let searchText = req.body.searchText;
+  console.log(searchText);
+  Ticket.find(
+    {
+      $or: [
+        { ticId: searchText },
+        { outCity: searchText },
+        { overCity: searchText }
+      ]
+    },
+    (err, doc) => {
+      console.log(doc);
+      if (err) {
+        res.send({ code: 201 });
+        return;
+      }
+      if (doc) {
+        res.send({ code: 200, searchResult: doc });
+      }
+    }
+  );
+});
+
 app.listen(3000, () => {
   console.log("Example app listening on port 3000!");
 });
